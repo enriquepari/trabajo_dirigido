@@ -1,0 +1,24 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+    <title>Tu Proyecto</title>
+</head>
+<body>
+
+<div class="navbar">
+    <a class="active" href="{% url 'home' %}">Inicio</a>
+    <a href="{% url 'requisitos' %}">Requisitos</a>
+    <a href="{% url 'ubicacion' %}">Ubicacion</a>
+    <div class="login">
+        <a href="{% url 'login' %}">Login</a>
+    </div>
+</div>
+
+<!-- Resto del contenido del cuerpo de la página -->
+
+</body>
+</html>

@@ -1,0 +1,38 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 300px; /* Ajusta el ancho según tus necesidades */
+  }
+  
+  form label {
+    display: none; /* Oculta las etiquetas predeterminadas */
+  }
+  
+  form input,
+  form select {
+    margin-bottom: 10px; /* Espaciado entre campos */
+    padding: 8px;
+    width: 100%; /* Ajusta el ancho según tus necesidades */
+  }
+  
+  form button {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  /* Resto de tus estilos... */
+  

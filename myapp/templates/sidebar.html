@@ -1,0 +1,111 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
+    <title>Tu Proyecto</title>
+</head>
+<body>
+        <div class="sidebar">
+                    {% if user_group %}
+              {% if user_group == "Administradores" %}
+              <li class="submenu">
+                <a href="#"><span class="icon-users"></span>Usuarios<span class="caret icon-arrow-down6"></span></a>
+                <ul class="children">
+                  <li><a href="{% url 'register' %}">Registrar usuarios</a></li>
+                  <li><a href="{% url 'user_list' %}">lista de usuario</a></li>
+                </ul>
+              </li>
+              <li><a href="{% url 'register' %}">Registrar usuarios</a></li>
+              <li><a href="{% url 'user_list' %}">lista de usuario</a></li>              
+                <li>
+                  <a href="{% url 'register_tramite' %}">Registrar los tramites</a>
+                </li>
+                <li>
+                  <a href="{% url 'listar_tramites' %}">listar tramites</a>
+                </li>           
+                <li>
+                  <a href="">Registrar afiliados</a>
+                </li>    
+                <li>
+                  <a href="">Editar afiliados</a>
+                </li>    
+                <li>
+                  <a href="">Registrar vehiulos</a>
+                </li>    
+                <li>
+                  <a href="">Editar vehiculos</a>
+                </li>    
+                <li>
+                  <a href="">Generar tarjeta de operacion </a>
+                </li>    
+                <li>
+                  <a href="">Buscador de tramites</a>
+                </li>    
+                <li>
+                  <a href="">Buscador de afiliados</a>
+                </li>    
+                <li>
+                  <a href="">Buscador de vehivulos</a>
+                </li>    
+                <li>
+                  <a href="">Buscador de tarjetas de operacion</a>
+                </li>    
+                <li>
+                  <a href="">Reportes</a>
+                </li>               
+              {% elif user_group == "Tecnicos" %}
+              <li>
+                <a href="{% url 'register_tramite' %}">Registrar los tramites</a>
+              </li>    
+              <li>
+                <a href="{% url 'listar_tramites' %}">listar tramites</a>
+              </li> 
+              <li>
+                <a href="">Registrar afiliados</a>
+              </li>    
+              <li>
+                <a href="">Registrar vehiulos</a>
+              </li>    
+              <li>
+                <a href="">Buscador de tramites</a>
+              </li>    
+              <li>
+                <a href="">Buscador de afiliados</a>
+              </li>    
+              <li>
+                <a href="">Buscador de vehivulos</a>
+              </li>    
+              <li>
+                <a href="">Buscador de tarjetas de operacion</a>
+              </li>                
+                  <p>Opciones para Group2</p>
+              {% elif user_group == "Secretarias" %}
+              <li>
+                <a href="">Registrar vehiulos</a>
+              </li>    
+              <li>
+                <a href="">Buscador de tramites</a>
+              </li>    
+              <li>
+                <a href="">Buscador de afiliados</a>
+              </li>    
+              <li>
+                <a href="">Buscador de vehivulos</a>
+              </li>    
+              <li>
+                <a href="">Buscador de tarjetas de operacion</a>
+              </li>                
+                  <p>Opciones para Group2</p>
+              {% endif %}
+          {% endif %}
+          <!-- Otro contenido del dashboard -->
+        </div>
+
+<!-- Resto del contenido del cuerpo de la página -->
+
+</body>
+</html>
+

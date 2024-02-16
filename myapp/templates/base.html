@@ -1,0 +1,14 @@
+<!-- base.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Tu código de encabezado aquí -->
+</head>
+<body>
+    {% include 'navbar2.html' %}
+    {% include 'sidebar.html' %}
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

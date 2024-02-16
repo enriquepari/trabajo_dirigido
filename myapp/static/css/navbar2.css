@@ -1,0 +1,29 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  padding-top: 60px; /* Asegura que el contenido no se oculte detrás del navbar */
+}
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #333; /* color de fondo del navbar */
+  color: white; /* color del texto */
+  padding: 10px 20px; /* espacio interno */
+  z-index: 1000; /* Asegura que el navbar esté encima de otros elementos */
+}
+
+.logout {
+  margin-left: auto; /* mueve el enlace de cierre de sesión al extremo derecho */
+}
+
+.nav-links a {
+  color: white; /* color del texto de los enlaces */
+  margin-left: 20px; /* espacio entre los enlaces */
+}
