@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+         .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .documento-indicador {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 5px;
+        }
+
+        .documento-existente {
+            background-color: green;
+        }
+
+        .sin-documento {
+            background-color: red;
+        }
+    </style>
+    <title>Listar Trámites</title>
+</head>
+<body>
+    {% extends 'base.html' %}
+    {% block content %}
+    <form method="get" action="{% url 'listar_tramites' %}">
+        <input type="text" name="q" value="{{ query }}" placeholder="Buscar">
+        <button type="submit">Buscar</button>
+    </form>
+
+    <!-- Contenido principal -->
+    <div class="container mt-5">
+       <!-- Botón para abrir la ventana modal -->
+        <button id="open-modal">Subir documento</button>
+        <div class="modal" id="modal">
+            <div class="modal-content">
+                <!-- Contenido del formulario -->
+                <form method="post" action="{% url 'listar_tramites' %}">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit">Guardar</button>
+                </form>
+                <!-- Botón para cerrar la ventana modal -->
+                <button id="close-modal">Cerrar Ventana Modal</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Controlar el estado de la ventana modal con JavaScript
+        const openModalBtn = document.getElementById('open-modal');
+        const closeModalBtn = document.getElementById('close-modal');
+        const modal = document.getElementById('modal');
+
+        openModalBtn.addEventListener('click', () => {
+            modal.style.display = 'flex';
+        });
+
+        closeModalBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+    </script>
+
+    <h2>Listado de Trámites</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Número de Trámite</th>
+                <th>Fecha</th>
+                <th>Hora</th>
+                <th>Solicitante</th>
+                <th>Número de Fojas</th>
+                <th>Tipo de Tramite</th>
+                <th>Fecha de Entrega con Observaciones</th>
+                <th>Estado</th>
+                <th>Comentario</th>
+                <th>Documento Subido</th>
+                <th>Obciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for tramite in tramites %}
+                <tr>
+                    <td>{{ tramite.num_tramite }}</td>
+                    <td>{{ tramite.fecha }}</td>
+                    <td>{{ tramite.hora }}</td>
+                    <td>{{ tramite.solicitante }}</td>
+                    <td>{{ tramite.num_fojas }}</td>
+                    <td>{{ tramite.tipo_de_tramite }}</td>
+                    <td>{{ tramite.fecha_entrega_form_obs }}</td>
+                    <td>{{ tramite.estado }}</td>
+                    <td>{{ tramite.comentario }}</td>
+                    <td>
+                        <span class="documento-indicador {% if tramite.documento_set.all %}documento-existente{% else %}sin-documento{% endif %}"></span>
+                        {% if tramite.documento_set.all %}
+                            {{ tramite.documento_set.first.nombre_archivo }}
+                        {% else %}
+                            Sin Documento
+                        {% endif %}
+                    </td>
+                    <td>
+                        (<a href="{% url 'editar_tramite' pk=tramite.pk %}">Editar</a>),
+                        (<a href="{% url 'subir_documento' tramite_id=tramite.id %}">Subir Documento</a>)
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endblock %}
+</body>
+</html>
