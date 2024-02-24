@@ -1,8 +1,10 @@
 from django import forms
 from django.utils import timezone
 from .models import Tramite
+from bootstrap_modal_forms.forms import BSModalForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from .models import Tipo_tramite
 import pytz
 
 
@@ -59,9 +61,16 @@ class CustomUserCreationForm(UserCreationForm):
         if commit:
             user.save()
         return user
-
+    
+class UserEditForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['username', 'first_name', 'last_name', 'email', 'is_active', 'groups']
+from .widgets import TipoTramiteChoiceField
 
 class TramiteForm(forms.ModelForm):
+    tipo_de_tramite = TipoTramiteChoiceField(queryset=Tipo_tramite.objects.all(), required=False)
+
     class Meta:
         model = Tramite
         fields = '__all__'
@@ -70,6 +79,8 @@ class TramiteForm(forms.ModelForm):
             'fecha_entrega_form_obs': forms.DateInput(attrs={'readonly': 'readonly'}),
             'hora': forms.TimeInput(attrs={'readonly': 'readonly'}),
             'num_tramite': forms.TextInput(attrs={'readonly': 'readonly'}),
+            'tipo_de_tramite':  forms.Select(),
+
 
         }
 
@@ -88,7 +99,7 @@ class TramiteForm(forms.ModelForm):
 class TuFormularioDeEdicion(forms.ModelForm):
     class Meta:
         model = Tramite
-        fields = ['num_tramite', 'fecha', 'hora', 'solicitante', 'num_fojas', 'fecha_entrega_form_obs', 'estado', 'comentario', 'usuario']
+        fields = ['num_tramite', 'fecha', 'hora', 'solicitante', 'num_fojas','tipo_de_tramite', 'fecha_entrega_form_obs', 'estado', 'comentario', 'usuario']
     num_tramite = forms.CharField(required=False, disabled=True, widget=forms.TextInput(attrs={'readonly': 'readonly'}))
     fecha_entrega_form_obs = forms.DateField(required=False, disabled=True, widget=forms.TextInput(attrs={'readonly': 'readonly'}))
     fecha = forms.DateField(required=False, disabled=True, widget=forms.TextInput(attrs={'readonly': 'readonly'}))
@@ -98,5 +109,53 @@ class TuFormularioDeEdicion(forms.ModelForm):
     def clean_fecha(self):
         return self.instance.fecha
 
-class PasswordResetEmailForm(forms.Form):
-    email = forms.EmailField(label='Correo Electrónico')
+from django import forms
+from django.contrib.auth.forms import PasswordResetForm
+from django.contrib.auth.models import User
+
+class CustomPasswordResetEmailForm(PasswordResetForm):
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+
+        if user:
+            self.fields['email'].initial = user.email
+            self.fields['email'].widget.attrs['readonly'] = True
+
+    class Meta:
+        model = User
+        fields = ['email']
+
+    def clean_email(self):
+        # Make sure the provided email belongs to the user
+        email = self.cleaned_data['email']
+        user = User.objects.filter(email=email).first()
+
+        if not user:
+            raise forms.ValidationError('Este correo electrónico no está asociado a ningún usuario.')
+
+        return email
+
+class TipoTramiteForm(forms.ModelForm):
+    class Meta:
+        model = Tipo_tramite
+        fields = ['nom_tipo_de_tramite']
+
+from .models import Documento
+
+# En tu archivo forms.py
+from django import forms
+from .models import Documento, Tramite
+
+class DocumentoForm(forms.ModelForm):
+    class Meta:
+        model = Documento
+        fields = ['nombre_archivo', 'archivo', 'tramite']
+
+    def __init__(self, *args, **kwargs):
+        tramite = kwargs.pop('tramite', None)
+        super().__init__(*args, **kwargs)
+
+        if tramite:
+            self.fields['tramite'].initial = tramite.id
+            self.fields['tramite'].widget.attrs['disabled'] = True

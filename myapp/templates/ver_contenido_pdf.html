@@ -1,0 +1,24 @@
+<!-- ver_contenido_pdf.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ver Contenido PDF</title>
+</head>
+<body>
+
+    <h2>Contenido del PDF</h2>
+
+    <p>Nombre del Archivo: {{ documento.nombre_archivo }}</p>
+
+    {% if texto %}
+        <pre>{{ texto|safe }}</pre>
+    {% else %}
+        <p>{{ texto }}</p>
+    {% endif %}
+
+    <a href="{% url 'listar_documentos' %}">Volver a la Lista de Documentos</a>
+
+</body>
+</html>

@@ -1,24 +1,22 @@
+<form method="post">
+  {% csrf_token %}
+  
+  <!-- Campo de tipo de trámite -->
+  {{ form.tipo_de_tramite }}
+  
+  <!-- Botón de + -->
+  <button type="button" id="agregar_tipo_tramite">+</button>
+  
+  <!-- Resto del formulario -->
+  {{ form.as_p }}
+  
+  <!-- Botón de submit -->
+  <button type="submit">Guardar</button>
+</form>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Formulario de Trámite</title>
-</head>
-<body>
-    {% extends 'base.html' %}
-    {% block content %}
-
-
-  <h2>Crear Trámite</h2>
-
-  <form method="post">
-    {% csrf_token %}
-    
-    {{ form.as_p }}
-    
-    <button type="submit">Guardar</button>
-  </form>
-  {% endblock %}
-
-</body>
-</html>
+<script>
+  document.getElementById('agregar_tipo_tramite').addEventListener('click', function() {
+      // Aquí puedes agregar lógica adicional cuando se haga clic en el botón +
+      alert('Clic en el botón +');
+  });
+</script>

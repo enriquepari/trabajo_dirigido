@@ -1,0 +1,22 @@
+<!-- templates/subir_documento.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subir Documento</title>
+</head>
+<body>
+    {% extends 'base.html' %}
+    {% block content %}
+
+    <h2>Subir Documento</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Subir Documento</button>
+    </form>
+    {% endblock %}
+
+</body>
+</html>

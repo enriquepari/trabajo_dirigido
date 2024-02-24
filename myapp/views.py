@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from .forms import UserEditForm
 from .forms import CustomUserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
@@ -12,7 +13,6 @@ from django.urls import reverse_lazy
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib import messages
-from .forms import PasswordResetEmailForm
 from django.shortcuts import get_object_or_404, render
 from django.contrib.auth.models import Group
 from django.shortcuts import render, redirect
@@ -24,7 +24,6 @@ from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib import messages
-from .forms import PasswordResetEmailForm
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
@@ -105,8 +104,17 @@ def crear_tramite(request):
     return render(request, 'register_tramite.html', {'form': form})
 
 def listar_tramites(request):
+    if request.method == 'POST':
+        form = TipoTramiteForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('listar_tramites')
+    else:
+        form = TipoTramiteForm()
+
     query = request.GET.get('q', '')
-    tramites = Tramite.objects.all().order_by('-id')
+    tramites = Tramite.objects.all()
+
     if query:
         tramites = tramites.filter(
             Q(num_tramite__icontains=query) |
@@ -114,7 +122,10 @@ def listar_tramites(request):
             Q(estado__icontains=query)
         )
 
+    tramites = tramites.order_by('-id')
+
     context = {
+        'form': form,
         'tramites': tramites,
         'query': query,
     }
@@ -134,24 +145,27 @@ def editar_tramite(request, pk):
 
     return render(request, 'editar_tramite.html', {'form': form, 'tramite': tramite})
 
+
 def editar_usuario(request, user_id):
-    user = User.objects.get(pk=user_id)
+    user = get_object_or_404(User, id=user_id)
 
     if request.method == 'POST':
-        form = UserChangeForm(request.POST, instance=user)
+        form = UserEditForm(request.POST, instance=user)
         if form.is_valid():
             form.save()
-            return redirect('user_list')
+            return redirect('user_list')  # Ajusta la URL según tu configuración
     else:
-        form = UserChangeForm(instance=user)
+        form = UserEditForm(instance=user)
 
-    return render(request, 'editar_usuario.html', {'form': form, 'usuario': user})
+    return render(request, 'editar_usuario.html', {'form': form, 'user': user})
+
+from .forms import CustomPasswordResetEmailForm
 
 def send_password_reset_email(request, user_id):
     user = get_object_or_404(User, id=user_id)
 
     if request.method == 'POST':
-        form = PasswordResetEmailForm(request.POST)
+        form = CustomPasswordResetEmailForm(request.POST)
         if form.is_valid():
             email = form.cleaned_data['email']
 
@@ -172,7 +186,7 @@ def send_password_reset_email(request, user_id):
             messages.success(request, 'Se ha enviado un correo electrónico de restablecimiento de contraseña.')
             return redirect('user_list')
     else:
-        form = PasswordResetEmailForm()
+        form = CustomPasswordResetEmailForm(user=request.user)
 
     return render(request, 'send_password_reset_email.html', {'form': form, 'user': user})
 
@@ -198,5 +212,41 @@ def reset_password(request, user_id):
 
     return render(request, 'reset_password.html', {'form': form, 'user': user})
 
+from .forms import TipoTramiteForm
 
+# views.py
+from django.shortcuts import render, redirect
+from .models import Documento
+from .forms import DocumentoForm
 
+def listar_documentos(request):
+    documentos = Documento.objects.all()
+    return render(request, 'listar_documentos.html', {'documentos': documentos})
+
+def subir_documento(request, tramite_id=None):
+    tramite = None
+    if tramite_id:
+        tramite = Tramite.objects.get(id=tramite_id)
+
+    formulario = DocumentoForm(request.POST or None, request.FILES or None, tramite=tramite)
+    
+    if request.method == 'POST':
+        if formulario.is_valid():
+            formulario.save()
+            return redirect('listar_documentos')
+
+    return render(request, 'subir_documento.html', {'form': formulario})
+import fitz
+
+# views.py
+from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponse
+from .models import Documento
+
+def ver_contenido_pdf(request, documento_id):
+    documento = get_object_or_404(Documento, id=documento_id)
+
+    with open(documento.archivo.path, 'rb') as pdf_file:
+        response = HttpResponse(pdf_file.read(), content_type='application/pdf')
+
+    return response
