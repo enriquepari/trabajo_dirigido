@@ -9,9 +9,9 @@
 <body>
   <nav>
     <div class="navbar">
-        <p class="tex">Usuarios, {{ user.username }}</p>
-        <p class="tex">Grupo: {{ user_group }}</p>
-        <a href="{% url 'dashboardhome' %}">Dashboard</a>
+        <p class="tex1">USUARIO: {{ user.username }}  </p>
+        <p class="tex2">   GRUPO: {{ user_group }}</p>
+        <a class="dashboard" href="{% url 'dashboardhome' %}">Dashboard</a>
         <div class="logout">
           {% if user.is_authenticated %}
           <a class="active" href="{% url 'logout' %}">Cerrar sesión</a>

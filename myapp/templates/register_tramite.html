@@ -1,22 +1,39 @@
-<form method="post">
-  {% csrf_token %}
-  
-  <!-- Campo de tipo de trámite -->
-  {{ form.tipo_de_tramite }}
-  
-  <!-- Botón de + -->
-  <button type="button" id="agregar_tipo_tramite">+</button>
-  
-  <!-- Resto del formulario -->
-  {{ form.as_p }}
-  
-  <!-- Botón de submit -->
-  <button type="submit">Guardar</button>
-</form>
+{% extends 'base.html' %}
+{% load static %}
 
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/registr_tramite.css' %}"> 
+<div class="container mt-5">
+    <button id="open-modal">Nuevo tramite</button>
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <form method="post" action="{% url 'register_tramite' %}">
+                {% csrf_token %}
+                {{ form_t_t.as_p }}
+                <button type="submit">Guardar</button>
+            </form>
+            <button class="close-modal" id="close-modal">Cerrar Ventana Modal</button>
+        </div>
+    </div>
+</div>
 <script>
-  document.getElementById('agregar_tipo_tramite').addEventListener('click', function() {
-      // Aquí puedes agregar lógica adicional cuando se haga clic en el botón +
-      alert('Clic en el botón +');
-  });
+    //  el estado de la ventana modal con JavaScript
+    const openModalBtn = document.getElementById('open-modal');
+    const closeModalBtn = document.getElementById('close-modal');
+    const modal = document.getElementById('modal');
+
+    openModalBtn.addEventListener('click', () => {
+        modal.style.display = 'flex';
+    });
+
+    closeModalBtn.addEventListener('click', () => {
+        modal.style.display = 'none';
+    });
 </script>
+    <form method="post">
+      <h2>Registrar trámite</h2>
+        {{ form_t.as_p }}
+        
+        <button type="submit" id="agregar_tipo_tramite">Guardar</button>
+    </form>
+{% endblock %}

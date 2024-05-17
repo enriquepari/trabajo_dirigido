@@ -1,0 +1,16 @@
+{% extends  'index_master.html' %}
+{% load static %}
+
+<body>
+    {% block content %}
+    <div class="right_col" role="main">
+
+    <h2>Observaciones para vehiculo {{ vehiculo.matricula }}</h2>
+    <ul>
+        {% for observacion in observaciones %}
+            <li>{{ observacion.espacio }} - {{ observacion.fecha_obs }} {{ observacion.hora_obs }}</li>
+        {% endfor %}
+    </ul>
+    {% endblock %}
+</body>
+d

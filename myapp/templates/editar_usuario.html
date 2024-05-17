@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
+{% load static %}
+<body>
+  {% block content %}
+  <link rel="stylesheet" href="{% static 'css/editar_usuario.css' %}">
 
-{% block content %}
   <h2>Editar Usuario: {{ usuario.username }}</h2>
   <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
@@ -9,3 +12,5 @@
     <button type="submit">Guardar Cambios</button>
   </form>
 {% endblock %}
+
+</body>

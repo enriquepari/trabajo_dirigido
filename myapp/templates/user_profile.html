@@ -1,0 +1,17 @@
+{% extends  'index_master.html' %}
+
+{% block content %}
+<div class="right_col" role="main">
+
+    <h1>Perfil de Usuario</h1>
+    <p><strong>Nombre de usuario:</strong> {{ user.username }}</p>
+    <p><strong>Nombre del usuario:</strong> {{ user.first_name }}</p>
+    <p><strong>Apellido del usuario:</strong> {{ user.last_name }}</p>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <p><strong>Grupos:</strong></p>
+    <ul>
+        {% for group in groups %}
+            <li>{{ group.name }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

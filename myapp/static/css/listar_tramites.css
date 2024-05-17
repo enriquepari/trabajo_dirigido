@@ -1,0 +1,178 @@
+
+.documento-indicador {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 5px;
+}
+.documento-existente {
+    background-color: green;
+}
+
+.sin-documento {
+    background-color: red;
+}
+
+table {
+    width: 100%; 
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 16px;
+    }
+
+th, td {
+    width: 10%;
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+    font-size: 70%;
+    }
+
+th {
+        background-color: #2A3F54;
+        color: #fff;
+        font-weight: bold;
+    }
+
+.flex-container {
+        display: flex;
+}
+
+    .edit-options a {
+            padding: 10px 20px;
+    background-color: #007bff; 
+    color: #fff; 
+        border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    }
+
+    .edit-options a:hover {
+        background-color: #2A3F54;
+        color: #fff;
+    }
+
+    .documento-indicador {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 5px;
+        vertical-align: middle;
+    }
+
+    .documento-existente {
+        background-color: green;
+    }
+
+    .sin-documento {
+        background-color: red;
+    }
+
+.edit-options a {
+        display: inline-block;
+        padding: 6px 12px;
+        text-decoration: none;
+        color: #fff;
+        border-radius: 5px;
+        margin-right: 5px;
+        transition: background-color 0.3s ease-in-out;
+    }
+
+    .edit-options a:hover {
+        color: #fff;
+    }
+
+    .edit-options a.editar {
+        padding: 10px 20px;
+        background-color: #007bff; 
+        color: #fff; 
+            border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .edit-options a.subir {
+        padding: 10px 20px;
+        background-color: #007bff; 
+        color: #fff; 
+            border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .edit-options a.editar:hover {
+        padding: 10px 20px;
+        background-color: #007bff; 
+        color: #fff; 
+            border: none;
+        border-radius: 5px;
+        cursor: pointer;    }
+
+    .edit-options a.subir:hover {
+        padding: 10px 20px;
+        background-color: #007bff; 
+        color: #fff; 
+            border: none;
+        border-radius: 5px;
+        cursor: pointer;    }
+    .edit-options a.agregar-observacion{
+        padding: 10px 20px;
+        background-color: #007bff; 
+        color: #fff; 
+            border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    form {
+        display: flex;
+        align-items: center;
+    }
+
+    input[type="text"] {
+        padding: 8px;
+        margin-right: 5px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    button[type="submit"] {
+        padding: 8px 12px;
+        background-color: #2A3F54;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    button[type="submit"]:hover {
+        background-color: #2A3F54;
+    }
+    .pagination {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    .step-links {
+        display: flex;
+        align-items: center;
+    }
+
+    .step-links a {
+        padding: 8px;
+        margin: 0 4px;
+        border: 1px solid #ddd;
+        text-decoration: none;
+        color: #333;
+        border-radius: 4px;
+    }
+
+    .step-links .current {
+        padding: 8px;
+        margin: 0 4px;
+        background-color: #4CAF50;
+        color: white;
+        border-radius: 4px;
+    }

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tarjeta de Operación</title>
+</head>
+<body>
+    <div class="container">
+        <!-- Mostrar los datos del vehículo aquí -->
+        <div class="datos">
+            <p><strong>Placa:</strong> {{ vehiculo.placa }}</p>
+            <p><strong>Chasis:</strong> {{ vehiculo.chasis }}</p>
+            <p><strong>Conductor:</strong> {{ vehiculo.conductor }}</p>
+            <p><strong>Marca:</strong> {{ vehiculo.marca }}</p>
+            <p><strong>Modelo:</strong> {{ vehiculo.modelo }}</p>
+            <p><strong>Categoría:</strong> {{ vehiculo.categoria }}</p>
+        </div>
+        <!-- Mostrar el código QR aquí -->
+        <div class="codigo-qr">
+            <img src="{{ qr_code_url }}" alt="Código QR" width="100" height="100">
+        </div>
+    </div>
+</body>
+</html>

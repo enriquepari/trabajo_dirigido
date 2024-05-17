@@ -1,0 +1,29 @@
+{% extends 'index_master.html' %}
+{% load static %}
+
+<body>
+{% block content %}
+<div class="right_col" role="main">
+<link rel="stylesheet" href="{% static 'css/afiliado_register.css' %}">
+<div class="container mt-5">
+    <button id="open-modal">Nuevo Afiliado</button>
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <form id="modal-form" data-form-type="modal">  <!-- Añadido data-form-type -->
+                {% csrf_token %}
+                {{ form_rs.as_p }}
+                <button type="button" id="save-modal">Guardar</button>  <!-- Cambiado a type="button" para evitar envío del formulario -->
+                <button class="close-modal" id="close-modal">Cerrar Ventana Modal</button>
+            </form>
+        </div>
+    </div>
+</div>
+<h1>Registrar Afiliado</h1>
+<form id="main-form" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Guardar Cambios</button>
+</form>
+<script src="{% static 'js/scripts.js' %}"></script>
+{% endblock %}
+</body>

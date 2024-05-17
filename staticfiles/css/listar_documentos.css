@@ -1,0 +1,33 @@
+a {
+    color: #007bff; /* Color primario de Bootstrap, ajusta según sea necesario */
+    text-decoration: none;
+    transition: color 0.3s ease-in-out;
+}
+
+a:hover {
+    color: #0056b3; /* Cambia el color al pasar el mouse sobre el enlace */
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.lista_doc {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+h2 {
+    color: #007bff; /* Color primario de Bootstrap, ajusta según sea necesario */
+}
+
+body {
+    font-family: 'Arial', sans-serif; /* Ajusta según la fuente preferida */
+    background-color: #f8f9fa; /* Color de fondo, ajusta según sea necesario */
+    color: #343a40; /* Color del texto, ajusta según sea necesario */
+    margin: 0;
+    padding: 20px;
+}

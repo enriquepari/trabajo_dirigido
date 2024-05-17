@@ -1,0 +1,39 @@
+{% extends 'index_master.html' %}
+{% load static %}
+
+
+<body>
+    {% block content %}
+    <div class="right_col" role="main">
+        <link rel="stylesheet" href="{% static 'css/afiliado_tramite_list.css' %}">
+
+        <h1>Lista de Trámites</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Número de Trámite</th>
+                    <th>Solicitante</th>
+                    <th>Tipo de Trámite</th>
+                    <th>Afiliado Registrado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for tramite, tiene_afiliado in tramites_con_afiliado %}
+                <tr>
+                    <td>{{ tramite.num_tramite }}</td>
+                    <td>{{ tramite.solicitante }}</td>
+                    <td>{{ tramite.tipo_de_tramite }}</td>
+                    <td>{% if tiene_afiliado %}Sí{% else %}No{% endif %}</td>
+                    <td>
+                        {% if not tiene_afiliado %}
+                        <a href="{% url 'afiliado_register' tramite.id %}">Registrar Afiliado</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endblock %}
+</body>

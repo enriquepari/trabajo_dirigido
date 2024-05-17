@@ -1,0 +1,54 @@
+
+    /* Estilos generales para el formulario y contenido */
+    form {
+        margin-top: 20px;
+        max-width: 400px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    h2 {
+        color: #007bff; /* Color primario de Bootstrap, ajusta según sea necesario */
+    }
+
+    /* Estilos para el botón "Subir Documento" */
+    button[type="submit"] {
+        padding: 10px 15px;
+        background-color: #007bff; /* Color primario de Bootstrap, ajusta según sea necesario */
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease-in-out;
+    }
+
+    button[type="submit"]:hover {
+        background-color: #0056b3; /* Cambia el color al pasar el mouse sobre el botón */
+    }
+
+    /* Estilos para el enlace de volver a la lista de documentos */
+    .asfw {
+        display: block;
+        margin-top: 20px;
+        color: #007bff; /* Color primario de Bootstrap, ajusta según sea necesario */
+        text-decoration: none;
+        transition: color 0.3s ease-in-out;
+    }
+
+    .asfw:hover {
+        color: #0056b3; /* Cambia el color al pasar el mouse sobre el enlace */
+    }
+
+    .asfw {
+        display: inline-block;
+        padding: 10px 15px;
+        background-color: #007bff; /* Color primario de Bootstrap, ajusta según sea necesario */
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease-in-out;
+    }
+
+    .asfw:hover {
+        background-color: #0056b3; /* Cambia el color al pasar el mouse sobre el enlace */
+    }

@@ -1,0 +1,44 @@
+{% extends 'index_master.html' %}
+{% load static %}
+<body>
+    {% block content %}
+    <div class="right_col" role="main">
+        <link rel="stylesheet" href="{% static 'css/afiliado_list.css' %}">
+
+        <h1>Lista de Afiliados Registrados</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID del Trámite</th>
+                    <th>Nombre Asociación</th>
+                    <th>Razón Social Operador</th>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                    <th>Ubicación</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for afiliado in afiliados %}
+                <tr>
+                    <td>{{ afiliado.tramite_id }}</td>
+                    <td>{{ afiliado.nombre_asociacion }}</td>
+                    <td>{{ afiliado.razon_social_operador }}</td>
+                    <td>{{ afiliado.fecha }}</td>
+                    <td>{{ afiliado.hora }}</td>
+                    <td>{{ afiliado.ubicacion }}</td>
+                    <td>
+                        {% if user.is_superuser %}
+                        <a href="{% url 'afiliado_edit' pk=afiliado.pk %}">Editar</a>
+                        </a>
+                        {% endif %}
+                        <a href="{% url 'afiliado_observation' afiliado=afiliado.id %}">Observacion</a>
+                        <a href="{% url 'afiliado_ver_observaciones' afiliado_id=afiliado.id %}">Ver observacion</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endblock %}
+</body>

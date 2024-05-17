@@ -1,6 +1,0 @@
-{% for group in widget.optgroups %}
-  {% for option in group.1 %}
-  <option value="{{ option.value|stringformat:'s' }}" {% if widget.value|stringformat:'s' == option.value|stringformat:'s' %} selected{% endif %}>{{ option.label }}</option>
-  {% endfor %}
-{% endfor %}
-<button type="button" id="{{ widget.button_id }}">+</button>

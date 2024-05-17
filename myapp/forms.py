@@ -1,12 +1,10 @@
 from django import forms
 from django.utils import timezone
-from .models import Tramite
-from bootstrap_modal_forms.forms import BSModalForm
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm,PasswordResetForm
 from django.contrib.auth.models import User
-from .models import Tipo_tramite
+from django.utils import timezone
 import pytz
-
+from .models import Marca_vehiculo,Observaciones_vehiculos, Tramite,Vehiculo,Observaciones,Razon_social, Afiliado, Observaciones_afiliados,Tipo_tramite,Documento
 
 class CustomUserCreationForm(UserCreationForm):
     first_name = forms.CharField(max_length=30, required=True, help_text='Required. Enter your first name.')
@@ -39,13 +37,26 @@ class CustomUserCreationForm(UserCreationForm):
         strip=False,
         help_text="Ingresa la misma contraseña que antes, para verificación.",
     )
-
     username = forms.CharField(
         label="Nombre de usuario",
         max_length=150,
         help_text="Requerido. 150 caracteres o menos. Letras, dígitos y @/./+/-/_ solamente.",
     )
-
+    first_name = forms.CharField(
+        label="Nombre ",
+        max_length=150,
+        help_text="Requerido. Ponga su primer nombre.",
+    )
+    last_name = forms.CharField(
+        label="Apellidos ",
+        max_length=150,
+        help_text="Requerido. Ingrese su apellido.",
+    )
+    email = forms.CharField(
+        label="Correo electronico ",
+        max_length=150,
+        help_text="Requerido. Introduzca una dirección de correo electrónico válida.",
+    )
     def clean_username(self):
         username = self.cleaned_data.get('username')
         if username and User.objects.filter(username=username).exists():
@@ -66,10 +77,26 @@ class UserEditForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['username', 'first_name', 'last_name', 'email', 'is_active', 'groups']
-from .widgets import TipoTramiteChoiceField
+     
+    username = forms.CharField(
+        label="Nombre de usuario",
+        max_length=150,
+        help_text="Requerido. 150 caracteres o menos. Letras, dígitos y @/./+/-/_ solamente.",
+    )
+    first_name = forms.CharField(
+        label="Nombre del usuario",
+        max_length=150,
+    )
+    last_name = forms.CharField(
+        label="Apellido del usuario",
+        max_length=150,
+    )
+    email = forms.CharField(
+        label="Correo electronico",
+        max_length=150,
+    )
 
 class TramiteForm(forms.ModelForm):
-    tipo_de_tramite = TipoTramiteChoiceField(queryset=Tipo_tramite.objects.all(), required=False)
 
     class Meta:
         model = Tramite
@@ -80,13 +107,12 @@ class TramiteForm(forms.ModelForm):
             'hora': forms.TimeInput(attrs={'readonly': 'readonly'}),
             'num_tramite': forms.TextInput(attrs={'readonly': 'readonly'}),
             'tipo_de_tramite':  forms.Select(),
-
-
         }
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user', None)
         super().__init__(*args, **kwargs)
+        self.fields['num_tramite'].widget.attrs['readonly'] = True
         tz = pytz.timezone('America/La_Paz')
 
         self.initial['fecha'] = timezone.now().astimezone(tz).date()
@@ -96,6 +122,9 @@ class TramiteForm(forms.ModelForm):
             self.fields['usuario'].initial = user.id
             self.fields['usuario'].widget.attrs['disabled'] = True
 
+        widget=forms.TextInput(attrs={'type': 'button', 'value': '+', 'class': 'plus-button'}),
+        required=False
+        
 class TuFormularioDeEdicion(forms.ModelForm):
     class Meta:
         model = Tramite
@@ -108,10 +137,6 @@ class TuFormularioDeEdicion(forms.ModelForm):
 
     def clean_fecha(self):
         return self.instance.fecha
-
-from django import forms
-from django.contrib.auth.forms import PasswordResetForm
-from django.contrib.auth.models import User
 
 class CustomPasswordResetEmailForm(PasswordResetForm):
     def __init__(self, *args, **kwargs):
@@ -127,7 +152,6 @@ class CustomPasswordResetEmailForm(PasswordResetForm):
         fields = ['email']
 
     def clean_email(self):
-        # Make sure the provided email belongs to the user
         email = self.cleaned_data['email']
         user = User.objects.filter(email=email).first()
 
@@ -141,21 +165,165 @@ class TipoTramiteForm(forms.ModelForm):
         model = Tipo_tramite
         fields = ['nom_tipo_de_tramite']
 
-from .models import Documento
-
-# En tu archivo forms.py
-from django import forms
-from .models import Documento, Tramite
-
 class DocumentoForm(forms.ModelForm):
+
     class Meta:
         model = Documento
         fields = ['nombre_archivo', 'archivo', 'tramite']
+        widgets = {
+            'tramite': forms.HiddenInput(),
+        }
 
     def __init__(self, *args, **kwargs):
         tramite = kwargs.pop('tramite', None)
         super().__init__(*args, **kwargs)
 
         if tramite:
+            self.initial['tramite'] = tramite.id
+
+            self.fields['tramite'].widget.attrs['readonly'] = True
+
+
+class ObservacionForm(forms.ModelForm):
+    class Meta:
+        model = Observaciones
+        fields = ['espacio', 'fecha_obs', 'hora_obs', 'tramite']
+        widgets = {
+            'espacio': forms.Textarea(attrs={'cols': 80, 'rows': 5, 'placeholder': 'Ingrese la observación aquí'}),
+            'fecha_obs': forms.DateInput(attrs={'readonly': 'readonly'}),
+            'hora_obs': forms.TimeInput(attrs={'readonly': 'readonly'}),
+            'tramite': forms.TextInput(attrs={'readonly': 'readonly'}),
+
+        }
+
+    def __init__(self, *args, **kwargs):
+        tramite = kwargs.pop('tramite', None)
+        super(ObservacionForm, self).__init__(*args, **kwargs)
+        self.fields['espacio'].label = 'Observación'
+        tz = pytz.timezone('America/La_Paz')
+
+  
+        self.initial['fecha_obs'] = timezone.now().astimezone(tz).date()
+        self.initial['hora_obs'] = timezone.now().astimezone(tz).strftime('%H:%M')
+        if tramite:
             self.fields['tramite'].initial = tramite.id
             self.fields['tramite'].widget.attrs['disabled'] = True
+           
+        required=False
+
+class RazonSocialForm(forms.ModelForm):
+    class Meta:
+        model = Razon_social
+        fields = ['razon_social_operador']
+
+class AfiliadoForm(forms.ModelForm):
+    class Meta:
+        model = Afiliado
+        fields = ['nombre_asociacion', 'razon_social_operador', 'fecha', 'hora', 'ubicacion']
+        widgets = {
+            'fecha': forms.DateInput(attrs={'readonly': 'readonly'}),
+            'hora': forms.TimeInput(attrs={'readonly': 'readonly'}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        tz = pytz.timezone('America/La_Paz')
+
+        self.initial['fecha'] = timezone.now().astimezone(tz).date()
+        self.initial['hora'] = timezone.now().astimezone(tz).strftime('%H:%M')
+        
+
+class EditarAfiliadoForm(forms.ModelForm):
+    class Meta:
+        model = Afiliado
+        fields = ['nombre_asociacion', 'razon_social_operador', 'fecha', 'hora', 'ubicacion']
+
+class ObservacionesAfiliadosForm(forms.ModelForm):
+    class Meta:
+        model = Observaciones_afiliados
+        fields = ['espacio', 'fecha_obs', 'hora_obs', 'afiliado']
+        widgets = {
+            'espacio': forms.Textarea(attrs={'cols': 80, 'rows': 5, 'placeholder': 'Ingrese la observación aquí'}),
+
+        }
+
+    def __init__(self, *args, **kwargs):
+        afiliado = kwargs.pop('afiliado', None)
+        super(ObservacionesAfiliadosForm, self).__init__(*args, **kwargs)
+
+        self.fields['espacio'].label = 'Observación'
+        tz = pytz.timezone('America/La_Paz')
+
+  
+        self.initial['fecha_obs'] = timezone.now().astimezone(tz).date()
+        self.initial['hora_obs'] = timezone.now().astimezone(tz).strftime('%H:%M')
+from .models import Vehiculo
+from django.utils import timezone
+import pytz
+
+class MarcaVehiculoForm(forms.ModelForm):
+    class Meta:
+        model = Marca_vehiculo
+        fields = ['marca_vehiculo']
+
+
+from django import forms
+from .models import Vehiculo
+from django.utils import timezone
+import pytz
+
+class VehiculoForm(forms.ModelForm):
+    class Meta:
+        model = Vehiculo
+        fields = ['placa', 'botic', 'conductor', 'fecha_ve', 'fecha_vvv', 'hora_ve', 'categoria', 
+                  'capacidad', 'tipo_de_vehiculo', 'marca_vehiculo', 'modelo', 'chasis', 'imagen', 
+                  'tipo_tarjeta', 'validez', 'gestion', 'rutas']
+        widgets = {
+            'fecha_ve': forms.DateInput(attrs={'readonly': 'readonly'}),
+            'hora_ve': forms.TimeInput(attrs={'readonly': 'readonly'}),
+            'fecha_vvv': forms.DateInput(attrs={'readonly': 'readonly'}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        tz = pytz.timezone('America/La_Paz')
+        afiliado = self.initial.get('afiliado')
+        if afiliado:
+            self.initial['botic'] = afiliado.tramite.num_tramite
+
+        self.initial['fecha_ve'] = timezone.now().astimezone(tz).date()
+        self.initial['hora_ve'] = timezone.now().astimezone(tz).strftime('%H:%M')
+
+        fecha_ve = self.initial.get('fecha_ve')
+        if fecha_ve:
+            self.initial['fecha_vvv'] = fecha_ve.replace(year=fecha_ve.year + 1)
+
+    def clean(self):
+        cleaned_data = super().clean()
+        return cleaned_data
+
+class ObservacionesVehiculosForm(forms.ModelForm):
+    class Meta:
+        model = Observaciones_vehiculos
+        fields = ['espacio', 'fecha_obs', 'hora_obs', 'vehiculo']
+        widgets = {
+            'espacio': forms.Textarea(attrs={'cols': 80, 'rows': 5, 'placeholder': 'Ingrese la observación aquí'}),
+
+        }
+
+    def __init__(self, *args, **kwargs):
+        vehiculo = kwargs.pop('vehiculo', None)
+        super(ObservacionesVehiculosForm, self).__init__(*args, **kwargs)
+
+        self.fields['espacio'].label = 'Observación'
+        tz = pytz.timezone('America/La_Paz')
+
+  
+        self.initial['fecha_obs'] = timezone.now().astimezone(tz).date()
+        self.initial['hora_obs'] = timezone.now().astimezone(tz).strftime('%H:%M')
+        if vehiculo:
+            self.initial['vehiculo'] = vehiculo.matricula
+
+            self.fields['vehiculo'].widget.attrs['readonly'] = False
+
+

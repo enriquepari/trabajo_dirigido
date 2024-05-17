@@ -1,0 +1,91 @@
+{% extends  'index_master.html' %}
+{% load static %}
+<body>
+   <div class="ewsa">
+    {% block content %}
+    <div class="right_col" role="main">
+
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+    <link rel="stylesheet" href="{% static 'css/listar_tramites.css' %}">
+
+
+    <h2>Listado de Trámites</h2>
+    <form method="get" action="{% url 'tramite_list' %}">
+        <input type="text" name="q" value="{{ query }}" placeholder="Buscar">
+        <button type="submit"><i class="fa fa-search" aria-hidden="true"></i>
+        </button>
+    </form>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>N° de Trámite</th>
+                <th>Fecha</th>
+                <th>Hora</th>
+                <th>Solicitante</th>
+                <th>N° de Fojas</th>
+                <th>Tipo de Tramite</th>
+                <th>Estado</th>
+                <th>Comentario</th>
+                <th>Documento Subido</th>
+                <th>Obciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for tramite in tramites %}
+                <tr>
+                    <td>{{ tramite.num_tramite }}</td>
+                    <td>{{ tramite.fecha }}</td>
+                    <td>{{ tramite.hora }}</td>
+                    <td>{{ tramite.solicitante }}</td>
+                    <td>{{ tramite.num_fojas }}</td>
+                    <td>{{ tramite.tipo_de_tramite }}</td>
+                    <td>{{ tramite.estado }}</td>
+                    <td>{{ tramite.comentario }}</td>
+                    <td>
+                        <span class="documento-indicador {% if tramite.documento_set.all %}documento-existente{% else %}sin-documento{% endif %}"></span>
+                        {% if tramite.documento_set.all %}
+                            <a href="{% url 'ver_contenido_pdf' documento_id=tramite.documento_set.first.id %}" target="_blank">{{ tramite.documento_set.first.nombre_archivo }}</a>
+                        {% else %}
+                            Sin Documento
+                        {% endif %}
+                    </td>
+                    <td class="edit-options">
+                        <div class="col-lg-4 col-md-4 flex-container">
+                            {% if user.is_superuser %}
+                            <a href="{% url 'tramite_edit' pk=tramite.pk %}" class="editar"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                            </a>
+                            {% endif %}
+                            
+                        <a href="{% url 'tramite_subir_documento' tramite=tramite.id %}" class="subir"><i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                        </a>
+                        <a href="{% url 'tramite_agregar_observacion' tramite=tramite.id %}" class="agregar-observacion"><i class="fa fa-list-ul" aria-hidden="true"></i>
+                        </a>
+                        <a href="{% url 'tramite_ver_observaciones_tramite' tramite_id=tramite.id %}"><i class="fa fa-eye" aria-hidden="true"></i>
+                        </a>
+                    </div>   
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="pagination">
+    <span class="step-links">
+        {% if tramites.has_previous %}
+            <a href="?page=1">&laquo; </a>
+        {% endif %}
+
+        <span class="current">
+            Página {{ tramites.number }} de {{ tramites.paginator.num_pages }}.
+        </span>
+
+        {% if tramites.has_next %}
+            <a href="?page={{ tramites.paginator.num_pages }}">&raquo;</a>
+        {% endif %}
+    </span>
+</div>
+    {% endblock %}
+</div>  
+</body>
+</html>

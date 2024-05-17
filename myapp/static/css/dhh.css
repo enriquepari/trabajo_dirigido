@@ -1,15 +1,11 @@
-/* Reset de márgenes y rellenos */
 body, h1, h2, h3, p, ul {
     margin: 0;
     padding: 0;
 }
 
-/* Estilos generales para el cuerpo del documento */
 body {
     font-family: 'Arial', sans-serif;
 }
-
-/* Estilos para el navbar */
 .navbar {
     background-color: #333;
     color: #fff;
@@ -22,7 +18,6 @@ body {
     margin-right: 20px;
 }
 
-/* Estilos para el sidebar */
 .sidebar {
     background-color: #f4f4f4;
     width: 200px;
@@ -52,10 +47,7 @@ body {
     background-color: #bbb;
 }
 
-/* Estilos para el contenido */
 .content {
     margin-left: 200px;
     padding: 20px;
 }
-
-/* Ajustes adicionales según necesidades específicas de tu aplicación */

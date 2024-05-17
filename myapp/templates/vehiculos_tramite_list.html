@@ -1,0 +1,35 @@
+{% extends 'index_master.html' %}
+{% load static %}
+
+{% block content %}
+<div class="right_col" role="main">
+    <link rel="stylesheet" href="{% static 'css/vehiculos_tramite_list.css' %}">
+
+    <h1>Lista de trámites con afiliado</h1>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Número de Trámite</th>
+                    <th>Nombre del Afiliado</th>
+                    <th>Razón Social</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for dato in datos_tabla %}
+                <tr>
+                    <td>{{ dato.numero_tramite }}</td>
+                    <td>{{ dato.nombre_afiliado }}</td>
+                    <td>{{ dato.razon_social }}</td>
+                    <td>
+                        <a href="{% url 'vehiculos_register' afiliado_id=dato.afiliado_id %}" class="btn btn-primary">Registrar Vehículo</a>
+                        <a href="{% url 'vehiculos_afiliado_tramite' afiliado_id=dato.afiliado_id %}" class="btn btn-primary">Ver Vehículos</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

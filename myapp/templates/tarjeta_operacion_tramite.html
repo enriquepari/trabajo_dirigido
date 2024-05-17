@@ -1,0 +1,34 @@
+{% extends 'index_master.html' %}
+{% load static %}
+
+{% block content %}
+<div class="right_col" role="main">
+    <link rel="stylesheet" href="{% static 'css/vehiculos_tramite_list.css' %}">
+
+    <h1>Lista de trámites con afiliado</h1>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Número de Trámite</th>
+                    <th>Nombre del Afiliado</th>
+                    <th>Vehiculos Registrados</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for dato in datos_tabla %}
+                <tr>
+                    <td>{{ dato.numero_tramite }}</td>
+                    <td>{{ dato.nombre_afiliado }}</td>
+                    <td>{{ dato.vehiculos_registrados }}</td>
+                    <td>
+                        <a href="{% url 'tarjeta_operacion_vehiculo' afiliado_id=dato.afiliado_id %}" class="btn btn-primary">Ver Vehículos</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

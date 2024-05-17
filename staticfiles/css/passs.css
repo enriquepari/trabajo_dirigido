@@ -1,0 +1,34 @@
+
+
+    form {
+        max-width: 400px;
+        margin: 0 auto;
+        background-color: #fff; /* Color de fondo del formulario */
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    button[type="submit"] {
+        padding: 10px 15px;
+        background-color: #007bff; /* Color primario de Bootstrap, ajusta según sea necesario */
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease-in-out;
+    }
+
+    button[type="submit"]:hover {
+        background-color: #0056b3; /* Cambia el color al pasar el mouse sobre el botón */
+    }
+
+    input[type="email"] {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }

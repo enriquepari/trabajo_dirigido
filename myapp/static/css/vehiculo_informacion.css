@@ -1,0 +1,29 @@
+.right_col {
+    padding: 20px;
+  }
+  
+  h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .vehiculo-info {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .info-group {
+    flex: 1;
+  }
+  
+  .info-group p {
+    margin-bottom: 10px;
+  }
+img {
+    max-width: 50px;
+    height: auto; 
+}
+img.large {
+    max-width: 50%; 
+    height: auto; 
+}

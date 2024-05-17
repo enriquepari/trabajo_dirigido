@@ -1,10 +1,14 @@
-<!-- templates/listar_documentos.html -->
 {% extends 'base.html' %}
-{% block content %}
+{% load static %}
+
+<body>
+    {% block content %}
+    <link rel="stylesheet" href="{% static 'css/listar_documentos.css' %}">
     <h2>Listado de Documentos</h2>
     <ul>
         {% for documento in documentos %}
-            <li>  {{documento.tramite.id}} {{ documento.tramite.tipo_de_tramite.nom_tipo_de_tramite }} {{ documento.nombre_archivo }} - <a href="{% url 'ver_contenido_pdf' documento.id %}" target="_blank">Ver Documento</a></li>
+            <li class="lista_doc">{{ documento.tramite.id }} {{ documento.tramite.tipo_de_tramite.nom_tipo_de_tramite }} {{ documento.nombre_archivo }} - <a href="{% url 'ver_contenido_pdf' documento.id %}" target="_blank">Ver Documento</a></li>
         {% endfor %}
     </ul>
-{% endblock %}
+    {% endblock %}
+</body>

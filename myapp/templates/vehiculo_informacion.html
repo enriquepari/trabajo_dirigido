@@ -1,0 +1,36 @@
+{% extends 'index_master.html' %}
+{% load static %}
+
+{% block content %}
+<div class="right_col" role="main">
+    <link rel="stylesheet" href="{% static 'css/vehiculo_informacion.css' %}">
+
+  <h1>Información del Vehículo</h1>
+  <div class="vehiculo-info">
+    <div class="info-group">
+      <p><strong>Placa:</strong> {{ vehiculo.placa }}</p>
+      <p><strong>Botic:</strong> {{ vehiculo.botic }}</p>
+      <p><strong>Conductor:</strong> {{ vehiculo.conductor }}</p>
+      <p><strong>Fecha de Vencimiento:</strong> {{ vehiculo.fecha_ve }}</p>
+      <p><strong>Hora de Vencimiento:</strong> {{ vehiculo.hora_ve }}</p>
+    </div>
+    <div class="info-group">
+      <p><strong>Categoría:</strong> {{ vehiculo.categoria }}</p>
+      <p><strong>Capacidad:</strong> {{ vehiculo.capacidad }}</p>
+      <p><strong>Tipo de Vehículo:</strong> {{ vehiculo.tipo_de_vehiculo }}</p>
+      <p><strong>Marca:</strong> {{ vehiculo.marca }}</p>
+      <p><strong>Modelo:</strong> {{ vehiculo.modelo }}</p>
+      <p><strong>Chasis:</strong> {{ vehiculo.chasis }}</p>
+    </div>
+    <div class="info-group">
+      <p><strong>Tipo de Tarjeta:</strong> {{ vehiculo.tipo_tarjeta }}</p>
+      <p><strong>Validez:</strong> {{ vehiculo.validez }}</p>
+      <p><strong>Gestión:</strong> {{ vehiculo.gestion }}</p>
+      <p><strong>Rutas:</strong> {{ vehiculo.rutas }}</p>
+    </div>
+  </div>
+  {% if vehiculo.imagen %}
+    <img src="{{ vehiculo.imagen.url }}" alt="Imagen del vehículo" class="large">
+  {% endif %}
+</div>
+{% endblock %}

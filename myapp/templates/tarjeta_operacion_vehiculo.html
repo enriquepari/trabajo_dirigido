@@ -1,0 +1,96 @@
+{% extends 'index_master.html' %}
+{% load static %}
+
+{% block content %}
+<div class="right_col" role="main">
+    <h1>Vehículos Registrados {{ afiliado.tramite.num_tramite }} - {{ afiliado.nombre_asociacion }}</h1>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Placa</th>
+                <th>Chasis</th>
+                <th>Conductor</th>
+                <th>Marca</th>
+                <th>Modelo</th>
+                <th>Categoría</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for vehiculo in vehiculos_afiliado %}
+            <tr>
+                <td>{{ vehiculo.placa }}</td>
+                <td>{{ vehiculo.chasis }}</td>
+                <td>{{ vehiculo.conductor }}</td>
+                <td>{{ vehiculo.marca }}</td>
+                <td>{{ vehiculo.modelo }}</td>
+                <td>{{ vehiculo.categoria }}</td>
+                <td>
+                    {% if vehiculo.tarjetaoperacion_set.all %}
+                        <a href="{% url 'actualizar_tarjeta_operacion' vehiculo.id %}" class="btn btn-info btn-sm"><i class="fas fa-sync-alt"></i> Actualizar Tarjeta de Operación</a>
+                        <a href="{% url 'ver_tarjeta_operacion_pdf' tarjeta_operacion_id=vehiculo.tarjetaoperacion_set.first.id %}" class="btn btn-success btn-sm" target="_blank">
+                            <i class="fas fa-file-pdf"></i> Ver Tarjeta de Operación
+                        </a>
+                                            {% else %}
+                        <a href="{% url 'generar_tarjeta_operacion' vehiculo.id %}" class="btn btn-primary btn-sm generar-tarjeta-btn"><i class="fas fa-qrcode"></i> Generar Tarjeta de Operación</a>
+                    {% endif %}
+                    <!-- Botón para ver detalles -->
+                    <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#vehiculoDetalles{{ vehiculo.id }}"><i class="fas fa-info-circle"></i> Ver Detalles</button>
+                    <!-- Modal para mostrar detalles del vehículo -->
+                    <div class="modal fade" id="vehiculoDetalles{{ vehiculo.id }}" tabindex="-1" role="dialog" aria-labelledby="vehiculoDetalles{{ vehiculo.id }}Label" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="vehiculoDetalles{{ vehiculo.id }}Label">Detalles del Vehículo</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <!-- Aquí se muestran los detalles del vehículo -->
+                                    <p><strong>Placa:</strong> {{ vehiculo.placa }}</p>
+                                    <p><strong>Chasis:</strong> {{ vehiculo.chasis }}</p>
+                                    <p><strong>Conductor:</strong> {{ vehiculo.conductor }}</p>
+                                    <p><strong>Marca:</strong> {{ vehiculo.marca }}</p>
+                                    <p><strong>Modelo:</strong> {{ vehiculo.modelo }}</p>
+                                    <p><strong>Categoría:</strong> {{ vehiculo.categoria }}</p>
+                                    <!-- Aquí puedes agregar más detalles si es necesario -->
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    document.querySelectorAll(".generar-tarjeta-btn").forEach(function(btn) {
+        btn.addEventListener("click", function(e) {
+            e.preventDefault();
+            var url = this.getAttribute("href");
+            fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert("Tarjeta de operación generada correctamente.");
+                    location.reload(); // Recargar la página
+                } else {
+                    alert("Error al generar la tarjeta de operación.");
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("Error al generar la tarjeta de operación.");
+            });
+        });
+    });
+});
+</script>
+{% endblock %}

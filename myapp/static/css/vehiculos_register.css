@@ -1,0 +1,60 @@
+h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+
+
+form label {
+    width: 100px; 
+    margin-right: 10px; 
+    text-align: right; 
+}
+button {
+    padding: 10px 20px;
+    background-color: #007bff; 
+    color: #fff; 
+        border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+button:hover {
+    background-color: #8b2525;
+}
+.close-modal{
+    background-color: #8b2525;
+}
+
+.ewsa{
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    
+}
+.modal {
+        position: fixed;
+        background: rgba(0,0,0,0.7);
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+      
+}
+
+.modal-content {
+
+    position: absolute;
+    top: 40%;
+    left: 40%;
+    margin: -25px 0 0 -25px;
+    margin: 0 auto;
+    display: flex;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 30%;
+}

@@ -1,0 +1,16 @@
+{% extends  'index_master.html' %}
+<body>
+    <div class="right_col" role="main">
+
+    {% block content %}
+    <div class="right_col" role="main">
+
+    <h2>Editar Afiliado</h2>
+    <form method="post" action="">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Guardar cambios</button>
+    </form>
+{% endblock %}
+</body>
+

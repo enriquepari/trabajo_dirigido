@@ -1,0 +1,39 @@
+{% extends 'index_master.html' %}
+{% load static %}
+
+{% block content %}
+<div class="right_col" role="main">
+    <h1>Vehículos Registrados para el Trámite {{ afiliado.tramite.num_tramite }} - {{ afiliado.nombre_asociacion }}</h1>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Placa</th>
+                <th>Chasis</th>
+                <th>Conductor</th>
+                <th>Marca</th>
+                <th>Modelo</th>
+                <th>Categoría</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for vehiculo in vehiculos_afiliado %}
+            <tr>
+                <td>{{ vehiculo.placa }}</td>
+                <td>{{ vehiculo.chasis }}</td>
+                <td>{{ vehiculo.conductor }}</td>
+                <td>{{ vehiculo.marca }}</td>
+                <td>{{ vehiculo.modelo }}</td>
+                <td>{{ vehiculo.categoria }}</td>
+                <td>
+                    <a href="{% url 'vehiculo_edit' vehiculo.id %}" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></a>
+                    <a href="{% url 'vehiculo_informacion' vehiculo.id %}" class="btn btn-info btn-sm"><i class="fas fa-info-circle"></i></a>
+                    <a href="{% url 'vehiculo_agregar_observaciones' vehiculo.id %}" class="btn btn-success btn-sm"><i class="fas fa-plus-circle"></i></a>
+                    <a href="{% url 'vehiculo_ver_observaciones' vehiculo.id %}" class="btn btn-warning btn-sm"><i class="fas fa-eye"></i></a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

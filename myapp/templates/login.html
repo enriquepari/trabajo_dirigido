@@ -1,15 +1,23 @@
-{% include 'navbar.html' %}
-
 {% load static %}
 
 {% block content %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}"> 
-    <div class="login-container">
-        <h2>Login</h2>
-        <form method="post" action="{% url 'login' %}" class="login-form">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Login</button>
-        </form>
+    <div class="login-container background-image">
+        <div class="login-form-container">
+            <img src="{% static 'imagen/logo.webp' %}" alt="Logo" class="logo mb-4">
+            <h2 class="mb-4">Login</h2>
+            <form method="post" action="{% url 'login' %}" class="login-form">
+                {% csrf_token %}
+                <div class="mb-3">
+                    {{ form.username.label_tag }}
+                    {{ form.username}}
+                </div>
+                <div class="mb-3">
+                    {{ form.password.label_tag }}
+                    {{ form.password }}
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Login</button>
+            </form>
+        </div>
     </div>
 {% endblock %}

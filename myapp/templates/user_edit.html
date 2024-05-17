@@ -1,0 +1,19 @@
+{% extends  'index_master.html' %}
+{% load static %}
+<body>
+  {% block content %}
+  <div class="right_col" role="main">
+
+  <link rel="stylesheet" href="{% static 'css/user_edit.css' %}">
+
+  <h2>Editar Usuario: {{ usuario.username }}</h2>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+    <button type="submit">Guardar Cambios</button>
+  </form>
+{% endblock %}
+
+</body>

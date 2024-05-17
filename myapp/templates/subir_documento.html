@@ -1,22 +1,17 @@
-<!-- templates/subir_documento.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Subir Documento</title>
-</head>
+{% extends 'base.html' %}
+{% load static %}
+
 <body>
-    {% extends 'base.html' %}
-    {% block content %}
 
-    <h2>Subir Documento</h2>
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Subir Documento</button>
-    </form>
-    {% endblock %}
+{% block content %}
+ <link rel="stylesheet" href="{% static 'css/subir_documento.css' %}">
 
+  <h2>Subir Documento para {{ tramite.id }}</h2>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Subir Documento</button>
+  </form>
+  <a class="asfw" href="{% url 'listar_documentos' %}">Volver a la lista de documentos</a>
+{% endblock %}
 </body>
-</html>

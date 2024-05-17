@@ -1,0 +1,33 @@
+a {
+    color: #007bff; 
+    text-decoration: none;
+    transition: color 0.3s ease-in-out;
+}
+
+a:hover {
+    color: #0056b3; 
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.lista_doc {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+h2 {
+    color: #007bff; 
+}
+
+body {
+    font-family: 'Arial', sans-serif; 
+    background-color: #f8f9fa; 
+    color: #343a40;
+    margin: 0;
+    padding: 20px;
+}

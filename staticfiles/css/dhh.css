@@ -1,0 +1,61 @@
+/* Reset de márgenes y rellenos */
+body, h1, h2, h3, p, ul {
+    margin: 0;
+    padding: 0;
+}
+
+/* Estilos generales para el cuerpo del documento */
+body {
+    font-family: 'Arial', sans-serif;
+}
+
+/* Estilos para el navbar */
+.navbar {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+}
+
+.navbar a {
+    color: #fff;
+    text-decoration: none;
+    margin-right: 20px;
+}
+
+/* Estilos para el sidebar */
+.sidebar {
+    background-color: #f4f4f4;
+    width: 200px;
+    padding: 20px;
+    position: fixed;
+    height: 100%;
+    top: 0;
+    left: -200px;
+    transition: 0.3s;
+}
+
+.sidebar ul {
+    list-style-type: none;
+}
+
+.sidebar a {
+    text-decoration: none;
+    color: #333;
+    display: block;
+    padding: 10px;
+    margin-bottom: 5px;
+    background-color: #ddd;
+    border-radius: 5px;
+}
+
+.sidebar a:hover {
+    background-color: #bbb;
+}
+
+/* Estilos para el contenido */
+.content {
+    margin-left: 200px;
+    padding: 20px;
+}
+
+/* Ajustes adicionales según necesidades específicas de tu aplicación */

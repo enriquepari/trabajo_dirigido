@@ -1,0 +1,85 @@
+{% extends 'index_master.html' %}
+{% load static %}
+
+{% block content %}
+<div class="right_col" role="main">
+    <link rel="stylesheet" href="{% static 'css/vehiculos_register.css' %}">
+    <div class="container mt-5">
+        <button id="open-modal">Nueva marca</button>
+        <div class="modal" id="modal">
+            <div class="modal-content">
+                <form method="post" class="modal-form">
+                    {% csrf_token %}
+                    {{ form_m_v.as_p }}
+                    <button type="submit">Guardar</button>
+                    <button class="close-modal" id="close-modal">Cerrar Ventana Modal</button>
+                </form>
+            </div>
+        </div>
+    </div>
+        <h1>Registrar Vehículos al trámite {{ tramite.num_tramite }}</h1>
+        <form id="main-form" method="post" class="main-form" >
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-6">
+                    {{ form.placa.label_tag }}
+                    {{ form.placa }}
+                    <br>
+                    {{ form.botic.label_tag }}
+                    {{ form.botic }}
+                    <br>
+                    {{ form.conductor.label_tag }}
+                    {{ form.conductor }}
+                    <br>
+                    {{ form.fecha_ve.label_tag }}
+                    {{ form.fecha_ve }}
+                    <br>
+                    {{ form.fecha_vvv.label_tag }}
+                    {{ form.fecha_vvv }}
+                    <br>
+                    {{ form.hora_ve.label_tag }}
+                    {{ form.hora_ve }}
+                    <br>
+                    {{ form.categoria.label_tag }}
+                    {{ form.categoria }}
+                    <br>
+                    {{ form.capacidad.label_tag }}
+                    {{ form.capacidad }}
+                </div>
+                <div class="col-md-6">
+                    {{ form.tipo_de_vehiculo.label_tag }}
+                    {{ form.tipo_de_vehiculo }}
+                    <br>
+                    {{ form.marca_vehiculo.label_tag }}
+                    {{ form.marca_vehiculo }}
+                    <br>
+                    {{ form.modelo.label_tag }}
+                    {{ form.modelo }}
+                    <br>
+                    {{ form.chasis.label_tag }}
+                    {{ form.chasis }}
+                    <br>
+                    {{ form.imagen.label_tag }}
+                    {{ form.imagen }}
+                    <br>
+                    {{ form.tipo_tarjeta.label_tag }}
+                    {{ form.tipo_tarjeta }}
+                    <br>
+                    {{ form.validez.label_tag }}
+                    {{ form.validez }}
+                    <br>
+                    {{ form.gestion.label_tag }}
+                    {{ form.gestion }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    {{ form.rutas.label_tag }}
+                    {{ form.rutas }}
+                </div>
+            </div>
+            <button type="submit">Registrar Vehículo</button>
+        </form>
+    <script src="{% static 'js/scripts.js' %}"></script>
+{% endblock %}
+</body>

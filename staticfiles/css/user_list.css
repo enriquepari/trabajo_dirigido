@@ -1,0 +1,76 @@
+body {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+}
+
+.list {
+    margin: 20px; /* Ajusta el margen para separar del navbar y sidebar */
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Diseño de grid flexible */
+}
+.user-list {
+    list-style: none;
+    padding: 0;
+}
+
+.user-item {
+    margin-bottom: 10px;
+}
+
+.assign-group-form {
+    display: flex;
+    align-items: center;
+}
+
+.group-select {
+    margin-right: 10px;
+}
+
+.assign-button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.assign-button:hover {
+    background-color: #45a049;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+td a {
+        display: inline-block;
+        padding: 8px 12px;
+        margin-right: 10px;
+        text-decoration: none;
+        color: #007bff; /* Color primario de Bootstrap, ajusta según sea necesario */
+        border: 1px solid #007bff; /* Bordes del enlace */
+        border-radius: 5px;
+        transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+    }
+
+    td a.btn-primary {
+        background-color: #007bff; /* Color primario de Bootstrap, ajusta según sea necesario */
+        color: #fff;
+    }
+
+    td a:hover,
+    td a.btn-primary:hover {
+        background-color: #0056b3; /* Cambia el color al pasar el mouse sobre el enlace */
+        color: #fff;
+    }
